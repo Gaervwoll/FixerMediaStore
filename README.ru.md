@@ -41,6 +41,30 @@ APK: `app\build\outputs\apk\debug\app-debug.apk`
 
 ---
 
+## Примеры имён файлов
+
+| Пример | Шаблон | Примечание |
+|--------|--------|------------|
+| `IMG_20240202_080328.jpg` | IMG_yyyyMMdd_HHmmss | Камера / многие приложения |
+| `IMG_20240515_143022.jpg` | IMG_yyyyMMdd_HHmmss | Возможен суффикс `_SSS` (например сохранение из Telegram) |
+| `IMG-20220513-WA0024.jpg` | WA_media_seq | WhatsApp; только дата → **12:00** |
+| `VID-20220513-WA0024.mp4` | WA_media_seq | WhatsApp видео |
+| `photo_2024-05-15_14-30-22.jpg` | Telegram_photo | Telegram Desktop — время сохранения |
+| `video_2024-05-15_14-30-22.mp4` | Telegram_video | Telegram Desktop — время сохранения |
+| `FB_IMG_1715789420123.jpg` | FB_IMG_ms | Facebook (UNIX мс) |
+| `Screenshot_2024-05-15-14-30-22.png` | Screenshot | Скриншот |
+
+### Как читается имя
+
+Имена мессенджеров — это **буквенные префиксы и числовые поля**, а не случайное чередование:
+
+- **WhatsApp:** `{IMG|VID|PTT|AUD|STK}-YYYYMMDD-WA####` — `WA####` это порядковый номер за день (0000…9999), **не** часы и минуты.
+- **Камера / Android:** `IMG_YYYYMMDD_HHmmss` — полная дата и время в имени.
+- **Telegram Desktop:** `photo_YYYY-MM-DD_HH-mm-ss` или `video_…` — дата/время **скачивания** на диск, не обязательно момент отправки в чате.
+- **Telegram Android (галерея):** часто `IMG_yyyyMMdd_HHmmss_SSS.jpg` — обрабатывается как обычный `IMG_*`.
+
+---
+
 ## Лицензия
 
 MIT

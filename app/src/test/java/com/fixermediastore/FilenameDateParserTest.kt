@@ -84,12 +84,40 @@ class FilenameDateParserTest {
     fun parseWhatsAppPattern() {
         val result = FilenameDateParser.parse("IMG-20240515-WA0001.jpg")
         assertEquals(LocalDateTime.of(2024, 5, 15, 12, 0, 0), result)
+        val labeled = FilenameDateParser.parseWithLabel("IMG-20240515-WA0001.jpg")
+        assertEquals("WA_media_seq", labeled?.patternLabel)
+    }
+
+    @Test
+    fun parseWhatsAppImg2022WithSequence() {
+        val result = FilenameDateParser.parse("IMG-20220513-WA0024.jpg")
+        assertEquals(LocalDateTime.of(2022, 5, 13, 12, 0, 0), result)
+    }
+
+    @Test
+    fun parseWhatsAppVidPattern() {
+        val result = FilenameDateParser.parse("VID-20220513-WA0024.mp4")
+        assertEquals(LocalDateTime.of(2022, 5, 13, 12, 0, 0), result)
+    }
+
+    @Test
+    fun parseCameraImg20240202() {
+        val result = FilenameDateParser.parse("IMG_20240202_080328.jpg")
+        assertEquals(LocalDateTime.of(2024, 2, 2, 8, 3, 28), result)
     }
 
     @Test
     fun parseTelegramPhotoPattern() {
         val result = FilenameDateParser.parse("photo_2024-05-15_14-30-22.jpg")
         assertEquals(LocalDateTime.of(2024, 5, 15, 14, 30, 22), result)
+    }
+
+    @Test
+    fun parseTelegramVideoPattern() {
+        val result = FilenameDateParser.parse("video_2024-05-15_14-30-22.mp4")
+        assertEquals(LocalDateTime.of(2024, 5, 15, 14, 30, 22), result)
+        val labeled = FilenameDateParser.parseWithLabel("video_2024-05-15_14-30-22.mp4")
+        assertEquals("Telegram_video", labeled?.patternLabel)
     }
 
     @Test

@@ -71,15 +71,18 @@ Android Studio: **Build → Build APK(s)**. For releases, use a signed **release
 
 ## Supported filename examples
 
-| Example | Pattern |
-|---------|---------|
-| `IMG_20240515_143022.jpg` | IMG_yyyyMMdd_HHmmss |
-| `IMG-20240515-WA0001.jpg` | WhatsApp |
-| `photo_2024-05-15_14-30-22.jpg` | Telegram |
-| `FB_IMG_1715789420123.jpg` | Facebook (UNIX ms) |
-| `Screenshot_2024-05-15-14-30-22.png` | Screenshot |
+| Example | Pattern | Notes |
+|---------|---------|-------|
+| `IMG_20240202_080328.jpg` | IMG_yyyyMMdd_HHmmss | Camera / many apps |
+| `IMG_20240515_143022.jpg` | IMG_yyyyMMdd_HHmmss | Optional `_SSS` suffix (e.g. Telegram gallery save) |
+| `IMG-20220513-WA0024.jpg` | WA_media_seq | WhatsApp; date only → **12:00**; `WA####` is a daily counter, not time |
+| `VID-20220513-WA0024.mp4` | WA_media_seq | WhatsApp video |
+| `photo_2024-05-15_14-30-22.jpg` | Telegram_photo | Telegram Desktop save time |
+| `video_2024-05-15_14-30-22.mp4` | Telegram_video | Telegram Desktop save time |
+| `FB_IMG_1715789420123.jpg` | FB_IMG_ms | Facebook (UNIX ms) |
+| `Screenshot_2024-05-15-14-30-22.png` | Screenshot | |
 
-See [README.ru.md](README.ru.md) for the full table.
+See [README.ru.md](README.ru.md) for naming conventions in Russian.
 
 ---
 

@@ -16,6 +16,11 @@ data class ParseResult(
 /**
  * Извлекает дату/время из имени файла по распространённым шаблонам.
  * Первое совпадение побеждает.
+ *
+ * Семейства имён:
+ * - Камера / Android: `IMG_yyyyMMdd_HHmmss` (опционально `_SSS` в конце).
+ * - WhatsApp: `{IMG|VID|PTT|AUD|STK}-yyyyMMdd-WA####` — дата в середине, `WA####` — счётчик за день, не время (восстанавливается полдень).
+ * - Telegram Desktop: `photo_yyyy-MM-dd_HH-mm-ss` / `video_yyyy-MM-dd_HH-mm-ss` (время сохранения на диск).
  */
 object FilenameDateParser {
 
@@ -41,12 +46,21 @@ object FilenameDateParser {
         ) { m ->
             safeDateTime(m, 1, 2, 3, 4, 5, 6)
         },
-        PatternSpec("WA_IMG_seq", Regex("""IMG-(\d{8})-WA\d*""", RegexOption.IGNORE_CASE)) { m ->
+        PatternSpec(
+            "WA_media_seq",
+            Regex("""(?:IMG|VID|PTT|AUD|STK)-(\d{8})-WA\d*""", RegexOption.IGNORE_CASE)
+        ) { m ->
             parseYmdHms(m.groupValues[1], "120000")
         },
         PatternSpec(
             "Telegram_photo",
             Regex("""photo_(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})""", RegexOption.IGNORE_CASE)
+        ) { m ->
+            safeDateTime(m, 1, 2, 3, 4, 5, 6)
+        },
+        PatternSpec(
+            "Telegram_video",
+            Regex("""video_(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})""", RegexOption.IGNORE_CASE)
         ) { m ->
             safeDateTime(m, 1, 2, 3, 4, 5, 6)
         },
@@ -88,9 +102,6 @@ object FilenameDateParser {
         },
         PatternSpec("yyyyMMdd-HHmmss", Regex("""(\d{8})-(\d{6})""")) { m ->
             parseYmdHms(m.groupValues[1], m.groupValues[2])
-        },
-        PatternSpec("IMG-WA", Regex("""IMG-(\d{8})-WA""", RegexOption.IGNORE_CASE)) { m ->
-            parseYmdHms(m.groupValues[1], "120000")
         },
         PatternSpec(
             "dd.MM.yyyy_HH-mm-ss",
